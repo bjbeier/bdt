@@ -490,6 +490,23 @@ html.dark .footer-section a:hover {
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
+        /* Justified text – especially for the About section and any long paragraphs */
+.about-text p,
+.service-card p,
+.trust-item p,
+.contact-card p,
+.section-subtitle {
+    text-align: justify;
+    hyphens: auto;           /* nice word breaking on narrow screens */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+}
+
+/* Optional: slightly wider line height for justified text (feels more comfortable) */
+.about-text p,
+.service-card p {
+    line-height: 1.7;
+}
     </style>
 </head>
 <body>
