@@ -67,19 +67,54 @@
             color: var(--primary-blue);
         }
 
-        .phone-btn {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+/* Desktop & tablet = nice rounded square (your current look) */
+.phone-btn {
+    background: var(--primary-blue);
+    color: var(--white) !important;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;           /* ← keeps the rounded-square look on bigger screens */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
 
-        .phone-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(65, 105, 225, 0.3);
+/* Phones only = still rounded-square, just smaller */
+@media (max-width: 768px) {
+    .phone-btn {
+        padding: 0.55rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 8px !important;      /* ← forces rounded-square on phones too */
+    }
+    
+    .phone-btn .full  { display: none; }
+    .phone-btn .short { display: inline; }
+}
+
+@media (max-width: 480px) {
+    .phone-btn {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.85rem;
+        border-radius: 8px !important;    /* ← still rounded-square even on tiny screens */
+    }
+}
+        
+        /* Optional: hide the long text on very small screens */
+        .phone-btn .full   { display: inline; }
+        .phone-btn .short  { display: none; }
+        
+        /* Short label on ALL phones */
+        @media (max-width: 768px) {
+            .phone-btn .full  { display: none; }
+            .phone-btn .short { display: inline; }
+        }
+        
+        /* Optional: make it even tighter on very small screens */
+        @media (max-width: 480px) {
+            .phone-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.84rem;
+            }
         }
 
         /* Mobile Menu Toggle */
@@ -371,7 +406,10 @@
                 <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <a href="tel:5132126714" class="phone-btn">📞 (513) 212-6714</a>
+            <a href="tel:5132126714" class="phone-btn">
+                <span class="full">Call or Text • (513) 212-6714</span>
+                <span class="short">(513) 212-6714</span>
+            </a>
         </div>
     </nav>
 
