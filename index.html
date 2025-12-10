@@ -507,6 +507,40 @@ html.dark .footer-section a:hover {
 .service-card p {
     line-height: 1.7;
 }
+
+        /* On mobile (≤768px) center almost all body text for a cleaner, balanced look */
+@media (max-width: 768px) {
+    body {
+        text-align: center;
+    }
+
+    /* Ensure these elements stay centered (they already are, but being explicit helps) */
+    .about-text p,
+    .service-card p,
+    .trust-item p,
+    .contact-card p,
+    .section-subtitle,
+    .section-title,
+    .category-title,
+    .footer-section,
+    .footer-bottom p {
+        text-align: center;
+    }
+
+    /* Keep justification on desktop, but switch to clean centered on mobile */
+    .about-text p,
+    .service-card p,
+    .trust-item p {
+        text-align: center;
+        hyphens: auto;
+    }
+
+    /* Optional: add a little breathing room on very narrow phones */
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
     </style>
 </head>
 <body>
