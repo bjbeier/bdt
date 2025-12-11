@@ -461,6 +461,7 @@ html:not(.dark) #moonIcon {
 }
 
 .about-photo {
+    max-width: 300px;
     width: 100%;
     height: auto;
     border-radius: 12px; /* adjust to taste */
