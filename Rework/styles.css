@@ -467,6 +467,7 @@ html:not(.dark) #moonIcon {
     border-radius: 12px; /* adjust to taste */
     object-fit: cover;
     display: block;
+    margin: 0 auto;
 }
 
 /* ==================== CONTACT SECTION ==================== */
