@@ -434,10 +434,14 @@ html:not(.dark) #moonIcon {
 }
 
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 3rem;
     align-items: center;
+}
+
+/* Let text take more space than the image on desktop (optional) */
+.about-text {
+    flex: 2;
 }
 
 .about-text h2 {
@@ -453,6 +457,7 @@ html:not(.dark) #moonIcon {
 }
 
 .about-image {
+    flex: 1;
     background: var(--light-blue);
     border-radius: 12px;
     padding: 3rem;
@@ -461,26 +466,29 @@ html:not(.dark) #moonIcon {
 }
 
 .about-photo {
-    max-width: 360px;   /* was 300px – adjust to taste */
+    max-width: 360px;       /* adjust to taste */
     width: 100%;
     height: auto;
     display: block;
-    margin: 0 auto;     /* keeps it centered */
+    margin: 0 auto;         /* centers the image */
     border-radius: 12px;
     object-fit: cover;
 }
 
-/* Desktop layout remains as-is */
-.about-content {
-    display: flex;
-    gap: 2rem;
-}
-
+/* Mobile layout – stack vertically, text then image */
 @media (max-width: 768px) {
     .about-content {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
-    /* just delete the .about-image { order: -1; } rule */
+
+    .about-image {
+        order: 2;           /* ensure image comes after text */
+        margin-top: 1.5rem; /* spacing under the text */
+    }
+
+    .about-text {
+        order: 1;
+    }
 }
 
 /* ==================== CONTACT SECTION ==================== */
