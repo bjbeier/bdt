@@ -213,7 +213,7 @@ nav {
 /* ==================== HERO SECTION ==================== */
 .hero {
     position: relative;
-    background-image: url('Images/blue-laptop.jpg');
+    background-image: url('images/blue-laptop.jpg');
     background-size: cover;
     background-position: center;
     color: var(--white);
