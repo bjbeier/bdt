@@ -840,3 +840,28 @@ footer {
         border-radius: 8px !important;
     }
 }
+
+
+
+/* Added from Grok to center items */
+/* Center all text in Trust Indicators and Service Cards */
+.trust-item h3,
+.trust-item p,
+.service-card h3,
+.service-card p {
+    text-align: center !important;
+}
+
+/* Center the two big section headings */
+.section-title,           /* "How Can I Help You?" */
+#contact .section-title { /* "Get In Touch" */
+    text-align: center !important;
+}
+
+/* Center the subtitles under those headings */
+.section-subtitle {
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;   /* optional – keeps long lines readable */
+}
