@@ -215,9 +215,9 @@ nav {
     position: relative;
     background-color: var(--primary-blue);
     background-image: 
-        linear-gradient(135deg, rgba(65, 105, 225, 0.95) 0%, rgba(91, 127, 232, 0.95) 100%),
-        repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255, 255, 255, 0.03) 35px, rgba(255, 255, 255, 0.03) 70px),
-        repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255, 255, 255, 0.03) 35px, rgba(255, 255, 255, 0.03) 70px);
+        linear-gradient(135deg, rgba(65, 105, 225, 0.92) 0%, rgba(91, 127, 232, 0.92) 100%),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255, 255, 255, 0.1) 40px, rgba(255, 255, 255, 0.1) 41px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255, 255, 255, 0.1) 40px, rgba(255, 255, 255, 0.1) 41px);
     color: var(--white);
     padding: 6rem 2rem;
     text-align: center;
@@ -227,19 +227,14 @@ nav {
 .hero::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
     background-image: 
-        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 100px 100px, 80px 80px, 120px 120px, 90px 90px, 110px 110px;
-    background-position: 0 0, 40px 60px, 30px 20px, 70px 40px, 20px 80px;
-    animation: circuitMove 60s linear infinite;
+        radial-gradient(circle, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+    background-size: 50px 50px;
+    animation: circuitMove 40s linear infinite;
     pointer-events: none;
     z-index: 1;
 }
