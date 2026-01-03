@@ -9,7 +9,7 @@
     --primary-blue: #4169E1;
     --light-blue: #E8F2FF;
     --charcoal: #2C3E50;
-    --soft-gray: #F7F9FC;
+    --soft-gray: #E2E8F0;
     --success-green: #10B981;
     --white: #FFFFFF;
 }
@@ -444,7 +444,7 @@ html:not(.dark) #moonIcon {
 
 /* ==================== ABOUT SECTION ==================== */
 .about-section {
-    background: var(--soft-gray);
+    background: #E1E7F0;
 }
 
 .about-content {
