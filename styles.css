@@ -49,14 +49,12 @@ html.dark .footer-section a:hover {
 
 html.dark nav,
 html.dark .service-card,
-html.dark .contact-card,
-html.dark .blog-card {
+html.dark .contact-card {
     background: #1e293b;
     border-color: #334155;
 }
 
-html.dark .service-card:hover,
-html.dark .blog-card:hover {
+html.dark .service-card:hover {
     border-color: #5B7FE8;
 }
 
@@ -109,33 +107,6 @@ html.dark .hero-toggle:hover {
     background: rgba(0, 0, 0, 0.4);
 }
 
-html.dark .coming-soon {
-    background: #1e293b;
-}
-
-html.dark .coming-soon h2 {
-    color: #5B7FE8;
-}
-
-html.dark .coming-soon p {
-    color: #94a3b8;
-}
-
-html.dark .blog-date {
-    color: #64748b;
-}
-
-html.dark .blog-card h3 {
-    color: #e0e7ff;
-}
-
-html.dark .blog-card p {
-    color: #94a3b8;
-}
-
-html.dark .page-hero {
-    background: #1e293b;
-}
 
 /* ==================== NAVIGATION ==================== */
 nav {
@@ -598,84 +569,7 @@ footer {
 
 
 
-.coming-soon {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: var(--soft-gray);
-    border-radius: 12px;
-    margin-top: 2rem;
-}
 
-.coming-soon-icon {
-    font-size: 5rem;
-    margin-bottom: 1rem;
-}
-
-.coming-soon h2 {
-    color: var(--primary-blue);
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.coming-soon p {
-    color: #666;
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-}
-
-.newsletter {
-    background: var(--primary-blue);
-    color: var(--white);
-    padding: 3rem 2rem;
-    border-radius: 12px;
-    text-align: center;
-    margin-top: 3rem;
-}
-
-.newsletter h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-.newsletter p {
-    margin-bottom: 2rem;
-    opacity: 0.95;
-}
-
-.newsletter-form {
-    display: flex;
-    gap: 1rem;
-    max-width: 500px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.newsletter-form input {
-    flex: 1;
-    min-width: 250px;
-    padding: 0.75rem 1rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.newsletter-form button {
-    padding: 0.75rem 2rem;
-    background: var(--charcoal);
-    color: var(--white);
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.newsletter-form button:hover {
-    transform: translateY(-2px);
-}
 
 /* ==================== TEXT ALIGNMENT ==================== */
 .about-text p,
@@ -840,14 +734,17 @@ footer {
 
 /* Blog Grid & Cards */
 .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2.5rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .blog-card {
+    width: 100%;
+    max-width: 400px;
     background: var(--white);
     border: 1px solid #e5e7eb;
     border-radius: 16px;
