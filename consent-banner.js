@@ -66,44 +66,6 @@
         }
 
         banner.innerHTML = `
-            <style>
-                @keyframes slideUp {
-                    from { transform: translate(-50%, 100%); opacity: 0; }
-                    to { transform: translate(-50%, 0); opacity: 1; }
-                }
-                .consent-btn {
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    transition: all 0.25s ease;
-                    font-size: 0.875rem;
-                }
-                .btn-accept {
-                    background: #4169E1;
-                    color: white;
-                    border: none;
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                }
-                .btn-accept:hover { 
-                    transform: translateY(-2px);
-                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                    filter: brightness(1.1);
-                }
-                .btn-deny {
-                    background: transparent;
-                    border: 1px solid currentColor;
-                    opacity: 0.9;
-                }
-                .btn-deny:hover { 
-                    transform: translateY(-2px);
-                    background: rgba(0,0,0,0.05); 
-                    opacity: 1; 
-                }
-                html.dark .btn-deny:hover {
-                    background: rgba(255,255,255,0.05);
-                }
-            </style>
             <div>
                 <h3 style="margin: 0 0 0.5rem 0; font-size: 1.125rem; font-weight: 700;">I value your privacy</h3>
                 <p style="margin: 0; font-size: 0.875rem; line-height: 1.5;">
