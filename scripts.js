@@ -692,6 +692,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderSharedLayout();
 
+    initBackToTop(); // Initialize early to ensure visibility
+
     initNav();
 
     initSmoothScroll();
@@ -700,8 +702,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initEmailReveal(); // Security Fix: Initialize email obfuscation
     initScrollReveal();
-    initBackToTop();
 
+    console.log('Blue Droid Technologies refined scripts initialized.');
 });
 // ==================== BACK TO TOP BUTTON INITIALIZATION ====================
 function initBackToTop() {
@@ -719,11 +721,15 @@ function initBackToTop() {
     bttWrapper.appendChild(bttButton);
     document.body.appendChild(bttWrapper);
 
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
+    const checkScroll = () => {
+        const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollPos > 300) {
             bttWrapper.classList.add('visible');
         } else {
             bttWrapper.classList.remove('visible');
         }
-    });
+    };
+
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); // Run once in case already scrolled
 }
