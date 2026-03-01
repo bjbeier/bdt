@@ -65,40 +65,63 @@ function initNav() {
 
 function initSmoothScroll() {
     document.addEventListener('click', function (e) {
-        const anchor = e.target.closest('a[href^="#"]');
+        // Find the closest anchor tag
+        const anchor = e.target.closest('a');
         if (!anchor) return;
 
-        const targetId = anchor.getAttribute('href');
-        if (targetId === '#') return;
+        const href = anchor.getAttribute('href');
+        if (!href) return;
 
-        const target = document.querySelector(targetId);
-        if (target) {
-            e.preventDefault();
+        // Check if it's the 'Home' link (index.html, / , or ./)
+        const isHomeLink = href === 'index.html' || href === './' || href === '/';
 
-            const headerOffset = 80;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-            const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition - headerOffset;
-            const duration = 1200;
-            let start = null;
+        // Check if it's an internal link targeting the current page
+        const isInternal = href.startsWith('#') ||
+            (href.startsWith('index.html#') && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/'))) ||
+            (isHomeLink && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')));
 
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        if (isInternal) {
+            // If it's the home link on the home page, target #top
+            let hash = href.includes('#') ? '#' + href.split('#')[1] : (isHomeLink ? '#top' : null);
+            if (!hash || hash === '#') return;
+
+            // Ensure #top exists if that's our target
+            if (hash === '#top' && !document.getElementById('top')) {
+                document.body.id = 'top';
             }
 
-            function animation(currentTime) {
-                if (start === null) start = currentTime;
-                const timeElapsed = currentTime - start;
-                const run = easeInOutCubic(Math.min(timeElapsed / duration, 1));
+            const target = document.querySelector(hash);
+            if (target) {
+                e.preventDefault();
 
-                window.scrollTo(0, startPosition + (distance * run));
+                const headerOffset = 80;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition - headerOffset;
+                const duration = 1200;
+                let start = null;
 
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(animation);
+                function easeInOutCubic(t) {
+                    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
                 }
-            }
 
-            requestAnimationFrame(animation);
+                function animation(currentTime) {
+                    if (start === null) start = currentTime;
+                    const timeElapsed = currentTime - start;
+                    const run = easeInOutCubic(Math.min(timeElapsed / duration, 1));
+
+                    window.scrollTo(0, startPosition + (distance * run));
+
+                    if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                    } else {
+                        // Update URL hash without jumping
+                        history.pushState(null, null, hash);
+                    }
+                }
+
+                requestAnimationFrame(animation);
+            }
         }
     });
 }
