@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PARTIALS_DIR = '.';
-const HTML_FILES = ['index.html', 'prices.html', 'blog.html', 'post.html'];
+const HTML_FILES = ['index.html', 'business.html', 'prices.html', 'blog.html', 'post.html'];
 
 const navContent = fs.readFileSync(path.join(PARTIALS_DIR, 'nav.html'), 'utf8');
 const footerContent = fs.readFileSync(path.join(PARTIALS_DIR, 'footer.html'), 'utf8');

@@ -15,6 +15,7 @@
     --clr-gray-dark: #1e293b;
     --clr-white: #FFFFFF;
     --clr-indigo: #e0e7ff;
+    --light-blue: #F0F9FF;
 
     /* Semantic Mappings - LIGHT (Default) */
     --primary: var(--clr-blue);
@@ -40,6 +41,7 @@
         --text-muted: #94a3b8;
         --card-bg: var(--clr-gray-dark);
         --card-border: #334155;
+        --light-blue: #1e293b;
         --nav-bg: rgba(30, 41, 59, 0.7);
         --footer-bg: #0a0e17;
         --footer-text: #cbd5e1;
@@ -217,6 +219,24 @@ nav {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
+
+.cta-primary {
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: inline-block;
+    transition: all 0.25s ease;
+}
+
+.cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(65, 105, 225, 0.3);
+}
+
 
 /* Legacy Toggle Styles Removed */
 
