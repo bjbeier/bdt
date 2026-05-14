@@ -1,35 +1,85 @@
+/**
+ * build.js
+ * Injects shared nav and footer partials into all HTML pages.
+ * Run with: node build.js
+ */
+
 const fs = require('fs');
 const path = require('path');
 
-const PARTIALS_DIR = '.';
-const HTML_FILES = ['index.html', 'business.html', 'prices.html', 'blog.html', 'post.html'];
+const ROOT = __dirname;
+const PARTIALS_DIR = path.join(ROOT, 'partials');
 
-const navContent = fs.readFileSync(path.join(PARTIALS_DIR, 'nav.html'), 'utf8');
-const footerContent = fs.readFileSync(path.join(PARTIALS_DIR, 'footer.html'), 'utf8');
+const NAV_PLACEHOLDER = '<!-- NAV_PLACEHOLDER -->';
+const FOOTER_PLACEHOLDER = '<!-- FOOTER_PLACEHOLDER -->';
 
-HTML_FILES.forEach(file => {
-    const filePath = path.join('.', file);
-    if (!fs.existsSync(filePath)) {
-        console.warn(`File not found: ${file}`);
-        return;
+const PAGES = [
+    'index.html',
+    'business.html',
+    'recycling.html',
+    'residential.html',
+    'blog.html',
+    'post.html',
+];
+
+function main() {
+    const nav = fs.readFileSync(path.join(PARTIALS_DIR, 'nav.html'), 'utf8').trim();
+    const footer = fs.readFileSync(path.join(PARTIALS_DIR, 'footer.html'), 'utf8').trim();
+
+    let anyError = false;
+
+    for (const page of PAGES) {
+        const filePath = path.join(ROOT, page);
+
+        if (!fs.existsSync(filePath)) {
+            console.warn(`  [SKIP] ${page} not found.`);
+            continue;
+        }
+
+        let html = fs.readFileSync(filePath, 'utf8');
+        let changed = false;
+
+        // Inject Navigation
+        if (html.includes(NAV_PLACEHOLDER)) {
+            html = html.replace(NAV_PLACEHOLDER, nav);
+            changed = true;
+        } else {
+            const navRegex = /<header id="site-header">[\s\S]*?<\/header>/;
+            if (navRegex.test(html)) {
+                html = html.replace(navRegex, `<header id="site-header">\n${nav}\n    </header>`);
+                changed = true;
+            } else {
+                console.warn(`  [WARN] ${page}: Navigation placeholder or <header id="site-header"> not found.`);
+                anyError = true;
+            }
+        }
+
+        // Inject Footer
+        if (html.includes(FOOTER_PLACEHOLDER)) {
+            html = html.replace(FOOTER_PLACEHOLDER, footer);
+            changed = true;
+        } else {
+            const footerRegex = /<footer id="site-footer">[\s\S]*?<\/footer>/;
+            if (footerRegex.test(html)) {
+                html = html.replace(footerRegex, `<footer id="site-footer">\n${footer}\n    </footer>`);
+                changed = true;
+            } else {
+                console.warn(`  [WARN] ${page}: Footer placeholder or <footer id="site-footer"> not found.`);
+                anyError = true;
+            }
+        }
+
+        if (changed) {
+            fs.writeFileSync(filePath, html, 'utf8');
+            console.log(`  [OK]   ${page} updated.`);
+        }
     }
 
-    let content = fs.readFileSync(filePath, 'utf8');
-
-    // Inject Navigation
-    if (content.includes('<!-- NAV_PLACEHOLDER -->')) {
-        content = content.replace('<!-- NAV_PLACEHOLDER -->', navContent);
-    } else if (content.includes('<header id="site-header"></header>')) {
-        content = content.replace('<header id="site-header"></header>', `<header id="site-header">\n${navContent}\n</header>`);
+    if (anyError) {
+        console.log('\nBuild completed with warnings. Check the output above.');
+    } else {
+        console.log('\nBuild complete. All pages updated successfully.');
     }
+}
 
-    // Inject Footer
-    if (content.includes('<!-- FOOTER_PLACEHOLDER -->')) {
-        content = content.replace('<!-- FOOTER_PLACEHOLDER -->', footerContent);
-    } else if (content.includes('<footer id="site-footer"></footer>')) {
-        content = content.replace('<footer id="site-footer"></footer>', `<footer id="site-footer">\n${footerContent}\n</footer>`);
-    }
-
-    fs.writeFileSync(filePath, content);
-    console.log(`Updated ${file}`);
-});
+main();

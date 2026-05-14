@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Blog Post | Blue Droid Technologies</title>
-    <link rel="stylesheet" href="styles.css?v=1.3">
+    <link rel="stylesheet" href="styles.css?v=1.12">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Security Headers (Meta Tags - Server-side headers recommended) -->
     <meta http-equiv="Content-Security-Policy"
@@ -17,31 +18,36 @@
 
 <body>
     <header id="site-header">
-        <nav>
-    <div class="nav-container">
-        <img src="images/logo.png" alt="Blue Droid Technologies" class="logo" width="180" height="50">
-        <button class="menu-toggle" data-menu-toggle aria-label="Toggle navigation">&#9776;</button>
-        <ul class="nav-links" id="navLinks">
+<nav>
+    <div class="nav-container" id="navContainer">
+        <a href="index.html" class="logo-wrapper">
+            <img src="images/logo.webp" alt="Blue Droid Technologies" class="logo" width="180" height="50">
+        </a>
+        <ul class="nav-links" id="primary-nav">
             <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#services">Services</a></li>
+            <li><a href="residential.html">Residential</a></li>
             <li><a href="business.html">Business</a></li>
-            <li><a href="prices.html">Pricing</a></li>
+            <li><a href="recycling.html">Recycling</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
-        <a href="tel:5132126714" class="phone-btn">
-            <span class="full">Call or Text &bull; (513) 212-6714</span>
-            <span class="short">(513) 212-6714</span>
-        </a>
+        <div class="nav-actions" id="navActions">
+            <div class="menu-wrapper">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" style="visibility: hidden;">&#9776;</button>
+                <ul class="overflow-menu" id="overflow-nav"></ul>
+            </div>
+            <a href="tel:5132126714" class="phone-btn">
+                <span class="full">Call or Text &bull; (513) 212-6714</span>
+                <span class="short">(513) 212-6714</span>
+            </a>
+        </div>
     </div>
 </nav>
-
     </header>
 
     <!-- Post Header / Visual Break -->
     <section class="hero hero-condensed">
-        <!-- Dark/Light Mode Toggle -->
         <div class="hero-content">
             <p style="margin-bottom: 0.5rem; opacity: 0.8;">Blog Insights</p>
             <h1>Technology Guides</h1>
@@ -55,7 +61,7 @@
     </main>
 
     <footer id="site-footer">
-        <div class="footer-content">
+<div class="footer-content">
     <div class="footer-section">
         <h4>Blue Droid Technologies</h4>
         <p>Support Made Simple</p>
@@ -64,9 +70,9 @@
     <div class="footer-section">
         <h4>Services</h4>
         <ul>
-            <li><a href="index.html#services">Residential Support</a></li>
             <li><a href="business.html">Business IT Services</a></li>
-            <li><a href="index.html#services">Electronics Recycling</a></li>
+            <li><a href="residential.html">Residential Support</a></li>
+            <li><a href="recycling.html">Electronics Recycling</a></li>
         </ul>
     </div>
     <div class="footer-section">
@@ -74,7 +80,7 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="business.html">Business</a></li>
-            <li><a href="prices.html">Pricing</a></li>
+            <li><a href="recycling.html">Recycling</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#contact">Contact</a></li>
@@ -107,7 +113,7 @@
 
     <script src="analytics.js" defer></script>
     <script src="consent-banner.js" defer></script>
-    <script src="scripts.js?v=1.2" defer></script>
+    <script src="scripts.js" defer></script>
     <script src="CMS/blog-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

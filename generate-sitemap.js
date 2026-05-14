@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const DOMAIN = 'https://bluedroidtech.com';
+// TODO: Verify this is the correct staging URL
+const DOMAIN = 'https://bjbeier.github.io/BDT-Staging/';
 const POSTS_PATH = path.join(__dirname, 'CMS', 'posts.json');
 const SITEMAP_PATH = path.join(__dirname, 'sitemap.xml');
 

@@ -64,8 +64,8 @@ Reusable HTML fragments injected at build time by `build.js`:
 
 | Partial | Purpose |
 |---------|---------|
-| `nav.html` | Shared navigation bar |
-| `footer.html` | Shared footer |
+| `partials/nav.html` | Shared navigation bar |
+| `partials/footer.html` | Shared footer |
 
 ---
 

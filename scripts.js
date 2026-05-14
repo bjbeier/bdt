@@ -13,50 +13,85 @@ function revealEmail(linkElement) {
     }
 }
 
-// ==================== SHARED LAYOUT INITIALIZATION ====================
-// Note: Header and Footer are now injected via build.js pre-build step.
-// This function is kept for any dynamic adjustments if needed in the future,
-// but currently logic resides in the static partials.
-function sectionHref(id) {
-    // Use in-page anchor if the element exists, otherwise link back to index.html with hash
-    return document.getElementById(id) ? `#${id}` : `index.html#${id}`;
-}
-
-
 
 
 function initNav() {
+    const primaryNav = document.getElementById('primary-nav');
+    const overflowNav = document.getElementById('overflow-nav');
+    const menuToggle = document.getElementById('menuToggle');
+    const navContainer = document.getElementById('navContainer');
+    const logoWrapper = document.querySelector('.logo-wrapper');
+    const navActions = document.getElementById('navActions');
 
-    const navLinks = document.getElementById('navLinks');
+    if (!primaryNav || !overflowNav || !menuToggle || !navContainer || !logoWrapper || !navActions) return;
 
-    const menuToggle = document.querySelector('[data-menu-toggle]');
+    // Toggle dropdown
+    menuToggle.addEventListener('click', () => {
+        overflowNav.classList.toggle('active');
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+    });
 
-
-
-    if (menuToggle && navLinks) {
-
-        menuToggle.addEventListener('click', () => {
-
-            navLinks.classList.toggle('active');
-
+    // Close mobile menu when clicking a link
+    overflowNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            overflowNav.classList.remove('active');
         });
+    });
 
+    function updateNav() {
+        if (!navContainer || !logoWrapper || !navActions) return;
 
+        // Temporarily remove nav-empty so navActions returns to its natural width for calculation
+        navContainer.classList.remove('nav-empty');
 
-        // Close mobile menu when clicking a link
+        // Calculate available width for primary-nav
+        // 140px is a safe buffer for flex gaps and padding
+        let availableWidth = navContainer.clientWidth - logoWrapper.clientWidth - navActions.clientWidth - 140;
 
-        navLinks.querySelectorAll('a').forEach(link => {
+        // Move items to overflow if primaryNav is too wide
+        while (primaryNav.scrollWidth > availableWidth && primaryNav.children.length > 0) {
+            overflowNav.insertBefore(primaryNav.lastElementChild, overflowNav.firstElementChild);
+            // Recalculate availableWidth because navActions width might have changed if menuToggle appeared
+            availableWidth = navContainer.clientWidth - logoWrapper.clientWidth - navActions.clientWidth - 140;
+        }
 
-            link.addEventListener('click', () => {
+        // Try to move items back to primaryNav if there's enough room
+        while (overflowNav.children.length > 0) {
+            const firstItem = overflowNav.firstElementChild;
+            primaryNav.appendChild(firstItem);
+            
+            // Recalculate
+            availableWidth = navContainer.clientWidth - logoWrapper.clientWidth - navActions.clientWidth - 140;
 
-                navLinks.classList.remove('active');
+            if (primaryNav.scrollWidth > availableWidth) {
+                // If it doesn't fit, put it back and stop
+                overflowNav.insertBefore(primaryNav.lastElementChild, overflowNav.firstElementChild);
+                break;
+            }
+        }
 
-            });
+        // Show/hide hamburger
+        if (overflowNav.children.length > 0) {
+            menuToggle.style.visibility = 'visible';
+            menuToggle.style.display = 'block';
+        } else {
+            menuToggle.style.visibility = 'hidden';
+            menuToggle.style.display = 'none';
+            overflowNav.classList.remove('active');
+        }
 
-        });
-
+        // Add 'nav-empty' class when primaryNav is completely hidden
+        if (primaryNav.children.length === 0) {
+            navContainer.classList.add('nav-empty');
+        } else {
+            navContainer.classList.remove('nav-empty');
+        }
     }
 
+    window.addEventListener('resize', updateNav);
+    // Initial call
+    setTimeout(updateNav, 50);
 }
 
 
@@ -65,63 +100,40 @@ function initNav() {
 
 function initSmoothScroll() {
     document.addEventListener('click', function (e) {
-        // Find the closest anchor tag
-        const anchor = e.target.closest('a');
+        const anchor = e.target.closest('a[href^="#"]');
         if (!anchor) return;
 
-        const href = anchor.getAttribute('href');
-        if (!href) return;
+        const targetId = anchor.getAttribute('href');
+        if (targetId === '#') return;
 
-        // Check if it's the 'Home' link (index.html, / , or ./)
-        const isHomeLink = href === 'index.html' || href === './' || href === '/';
+        const target = document.querySelector(targetId);
+        if (target) {
+            e.preventDefault();
 
-        // Check if it's an internal link targeting the current page
-        const isInternal = href.startsWith('#') ||
-            (href.startsWith('index.html#') && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/'))) ||
-            (isHomeLink && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')));
+            const headerOffset = 80;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition - headerOffset;
+            const duration = 1200;
+            let start = null;
 
-        if (isInternal) {
-            // If it's the home link on the home page, target #top
-            let hash = href.includes('#') ? '#' + href.split('#')[1] : (isHomeLink ? '#top' : null);
-            if (!hash || hash === '#') return;
-
-            // Ensure #top exists if that's our target
-            if (hash === '#top' && !document.getElementById('top')) {
-                document.body.id = 'top';
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
             }
 
-            const target = document.querySelector(hash);
-            if (target) {
-                e.preventDefault();
+            function animation(currentTime) {
+                if (start === null) start = currentTime;
+                const timeElapsed = currentTime - start;
+                const run = easeInOutCubic(Math.min(timeElapsed / duration, 1));
 
-                const headerOffset = 80;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                const startPosition = window.pageYOffset;
-                const distance = targetPosition - startPosition - headerOffset;
-                const duration = 1200;
-                let start = null;
+                window.scrollTo(0, startPosition + (distance * run));
 
-                function easeInOutCubic(t) {
-                    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
                 }
-
-                function animation(currentTime) {
-                    if (start === null) start = currentTime;
-                    const timeElapsed = currentTime - start;
-                    const run = easeInOutCubic(Math.min(timeElapsed / duration, 1));
-
-                    window.scrollTo(0, startPosition + (distance * run));
-
-                    if (timeElapsed < duration) {
-                        requestAnimationFrame(animation);
-                    } else {
-                        // Update URL hash without jumping
-                        history.pushState(null, null, hash);
-                    }
-                }
-
-                requestAnimationFrame(animation);
             }
+
+            requestAnimationFrame(animation);
         }
     });
 }
@@ -365,20 +377,14 @@ function initScrollReveal() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // renderSharedLayout(); // No longer needed - injected via build.js
-
-    initBackToTop(); // Initialize early to ensure visibility
-
     initNav();
 
     initSmoothScroll();
 
-    initHeroParticles();
-
     initEmailReveal(); // Security Fix: Initialize email obfuscation
     initScrollReveal();
+    initBackToTop();
 
-    console.log('Blue Droid Technologies refined scripts initialized.');
 });
 // ==================== BACK TO TOP BUTTON INITIALIZATION ====================
 function initBackToTop() {
@@ -396,15 +402,11 @@ function initBackToTop() {
     bttWrapper.appendChild(bttButton);
     document.body.appendChild(bttWrapper);
 
-    const checkScroll = () => {
-        const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollPos > 300) {
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
             bttWrapper.classList.add('visible');
         } else {
             bttWrapper.classList.remove('visible');
         }
-    };
-
-    window.addEventListener('scroll', checkScroll);
-    checkScroll(); // Run once in case already scrolled
+    });
 }
